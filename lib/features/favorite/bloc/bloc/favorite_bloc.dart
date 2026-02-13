@@ -21,7 +21,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     add(FetchFavoriteList());
   }
 
-  void fetchList(event, emit) async {
+  void fetchList(FavoriteEvent event, Emitter<FavoriteState> emit) async {
     emit(FavoriteLoading());
     try {
       List<FavoriteModel> tempFavList = await favoriteRepository
@@ -32,7 +32,10 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     }
   }
 
-  void toggleFavourite(event, emit) async {
+  void toggleFavourite(
+    ToggleFavoriteItem event,
+    Emitter<FavoriteState> emit,
+  ) async {
     if (state is FavoriteSuccess) {
       final currentState = state as FavoriteSuccess;
       final updatedList = currentState.favoriteItemsList.map((item) {
@@ -44,7 +47,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     }
   }
 
-  void toggleCheckbox(event, emit) async {
+  void toggleCheckbox(ToggleCheckbox event, Emitter<FavoriteState> emit) async {
     if (state is FavoriteSuccess) {
       final currentState = state as FavoriteSuccess;
       final updatedList = currentState.favoriteItemsList.map((item) {
@@ -56,7 +59,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     }
   }
 
-  void deleteSelected(event, emit) async {
+  void deleteSelected(DeleteSelected event, Emitter<FavoriteState> emit) async {
     if (state is FavoriteSuccess) {
       final currentState = state as FavoriteSuccess;
       final updatedList = currentState.favoriteItemsList.where((element) {
